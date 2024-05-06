@@ -1,6 +1,7 @@
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Typography } from '@mui/material';
 import React from 'react';
 import GaugeComponent from 'react-gauge-component';
+import { determineSeverity } from '../utils/severityUtils';
 
 // Interfaces o Tipos usualmente se colocan al inicio del archivo o en un archivo separado si se reutilizan en varios lugares.
 interface CVSSDisplayProps {
@@ -11,6 +12,8 @@ interface CVSSDisplayProps {
 
 
 const CVSSDisplay = ({ baseScore, vectorComponent }: CVSSDisplayProps) => {
+  const severity = determineSeverity(baseScore ?? 0);
+  console.log(`The severity is ${severity.label} with color ${severity.color}.`);
   return (
     <Box sx={{ width: "80%", margin: "0 auto" }}>
       <Grid container direction="column" justifyContent="center" alignItems="center" spacing={1}>
@@ -39,11 +42,15 @@ const CVSSDisplay = ({ baseScore, vectorComponent }: CVSSDisplayProps) => {
             minValue={0}
             maxValue={10}
           />
+          {
+            baseScore !== null && (
+              <Typography variant="body1" style={{ textAlign: 'center', width: "100%", fontWeight: "bold", color: `${severity.color}` }}>
+                {severity.label}
+              </Typography>
+            )
+          }
         </Grid>
         <Grid item xs={12} sx={{ height: '25%' }}>
-          {/* <Typography variant="h6" style={{ textAlign: 'center', width: "100%" }}>
-            {vectorString}
-          </Typography> */}
           {vectorComponent}
 
         </Grid>

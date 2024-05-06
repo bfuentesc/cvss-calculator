@@ -89,3 +89,11 @@ export interface CVSSNumericValues {
     N: number;
   };
 }
+
+// Definición de tipos para los segmentos de severidad
+export interface SeveritySegment {
+  limit: number; // Opcional porque el último segmento no tiene límite
+  color: string;
+  label: string;
+}
+
