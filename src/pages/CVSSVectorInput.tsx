@@ -48,7 +48,7 @@ const CVSSVectorInput = () => {
         }));
 
     };
-    
+
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target.value;
@@ -81,7 +81,6 @@ const CVSSVectorInput = () => {
 
 
     return <Container sx={{
-        margin: '15px auto',
         padding: '20px',
         display: 'flex',
         flexDirection: 'column',
@@ -92,7 +91,7 @@ const CVSSVectorInput = () => {
             <TextField
                 id="outlined-start-adornment"
                 fullWidth
-                sx={{ m: 1, width: "60vh"}}
+                sx={{ m: 1, width: "60vh" }}
                 label="Enter CVSS Vector"
                 onChange={handleInputChange}
                 value={vector}
@@ -139,7 +138,14 @@ const CVSSVectorInput = () => {
                     <ToggleButtons options={scopeButtonConfigs.options}
                         onChange={(key: string) => handleChange(scopeButtonConfigs.key, key)} value={vectorValues['S']} />
                 </Box>
-
+            </Box>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                flexBasis: '100%',
+                flex: 1,
+                p: 2,
+            }}>
                 <Typography variant="h5">
                     Impact Metrics
                 </Typography>

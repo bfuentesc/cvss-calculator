@@ -72,7 +72,6 @@ const QuickCVSSCalculator = () => {
 
 
     return <Container sx={{
-        margin: '15px auto',
         padding: '20px',
         display: 'flex',
         flexDirection: 'column',
@@ -125,6 +124,14 @@ const QuickCVSSCalculator = () => {
                     <ToggleButtons options={scopeButtonConfigs.options}
                         onChange={(key: string) => handleChange(scopeButtonConfigs.key, key)} />
                 </Box>
+            </Box>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                flexBasis: '100%',
+                flex: 1,
+                p: 2,
+            }}>
 
                 <Typography variant="h5">
                     Impact Metrics

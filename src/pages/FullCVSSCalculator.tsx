@@ -73,7 +73,6 @@ const FullCVSSCalculator = () => {
 
 
     return <Container sx={{
-        margin: '15px auto',
         padding: '20px',
         display: 'flex',
         flexDirection: 'column',
@@ -81,7 +80,7 @@ const FullCVSSCalculator = () => {
         overflow: 'auto',
     }}>
         <CVSSDisplay baseScore={baseScore} vectorComponent={
-            <Typography variant="h6" style={{ textAlign: 'center'}}>
+            <Typography variant="h6" style={{ textAlign: 'center' }}>
                 {vector}
             </Typography>
         } />
@@ -127,6 +126,14 @@ const FullCVSSCalculator = () => {
                     <ToggleButtons options={scopeButtonConfigs.options}
                         onChange={(key: string) => handleChange(scopeButtonConfigs.key, key)} />
                 </Box>
+            </Box>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                flexBasis: '100%',
+                flex: 1,
+                p: 2,
+            }}>
 
                 <Typography variant="h5">
                     Impact Metrics
