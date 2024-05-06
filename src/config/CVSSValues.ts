@@ -1,4 +1,4 @@
-import { CVSSNumericValues } from "../types/types";
+import { CVSSNumericValues, SeveritySegment } from "../types/types";
 
 export const cvssNumericValues: CVSSNumericValues = {
     AV: {
@@ -46,3 +46,11 @@ export const cvssNumericValues: CVSSNumericValues = {
       N: 0,
     },
   };
+
+export const severityConfig: SeveritySegment[] = [
+    { limit: 0, color: '#FFFFFF', label: 'None'  }, // Blanco para "None"
+    { limit: 3.9, color: '#7AC74F', label: 'Low'  }, // Verde para "Low"
+    { limit: 6.9, color: '#F2BB05', label: 'Medium' }, // Amarillo para "Medium"
+    { limit: 8.9, color: '#DF2935', label: 'High'  }, // Naranja para "High"
+    { limit: 10, color: '#000000', label: 'Critical'  } // Rojo para "Critical"
+];

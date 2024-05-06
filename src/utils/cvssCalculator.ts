@@ -1,4 +1,4 @@
-import { cvssNumericValues } from "../config/CVSSNumericValues";
+import { cvssNumericValues } from "../config/CVSSValues";
 import { CVSSValues, VectorValues } from "../types/types";
 
 export function calculateCVSS(values: CVSSValues) {
