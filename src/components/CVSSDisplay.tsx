@@ -1,4 +1,4 @@
-import { Grid, Typography, Container } from '@mui/material';
+import { Grid, Typography, Container, useTheme, Theme } from '@mui/material';
 import React from 'react';
 import GaugeComponent from 'react-gauge-component';
 import { determineSeverity } from '../utils/severityUtils';
@@ -13,6 +13,8 @@ interface CVSSDisplayProps {
 
 const CVSSDisplay = ({ baseScore, vectorComponent }: CVSSDisplayProps) => {
   const severity = determineSeverity(baseScore ?? 0);
+
+  const theme : Theme = useTheme();
   
   return (
     <Container maxWidth="lg">
@@ -36,7 +38,7 @@ const CVSSDisplay = ({ baseScore, vectorComponent }: CVSSDisplayProps) => {
             value={baseScore ?? 0}
             labels={{
               valueLabel: {
-                style: { fontSize: "50px", fill: "#000", textShadow: "none" }
+                style: { fontSize: "50px", fill: theme.palette.text.primary, textShadow: "none" }
               }
             }}
             minValue={0}
