@@ -7,11 +7,12 @@ import { ToggleButtonConfig } from '../types/types';
 
 // Definición de las props que el componente necesita
 interface AccordionMetricsProps {
-    config: ToggleButtonConfig
+    config: ToggleButtonConfig;
+    value: string | null;
     handleChange: (metric: string, key: string) => void;
 }
 
-const AccordionMetrics = ({ config, handleChange }: AccordionMetricsProps) => {
+const AccordionMetrics = ({ config, value, handleChange }: AccordionMetricsProps) => {
     return (
         <Box sx={{ pt: 2 }}>
             <Accordion>
@@ -25,7 +26,7 @@ const AccordionMetrics = ({ config, handleChange }: AccordionMetricsProps) => {
                 </AccordionDetails>
             </Accordion>
             <Box sx={{ p: 2 }}>
-                <ToggleButtons options={config.options} onChange={(key: string) => handleChange(config.key, key)} />
+                <ToggleButtons options={config.options} value={value} onChange={(key: string) => handleChange(config.key, key)} />
             </Box>
         </Box>
     );

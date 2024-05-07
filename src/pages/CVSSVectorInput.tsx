@@ -63,7 +63,7 @@ const CVSSVectorInput = () => {
         setVector(input);
         try {
             const values = parseCVSSVector(input);
-            console.log('Parsed CVSS Values:', values);
+            setVectorValues(values);
         } catch (error) {
             console.error('Error parsing CVSS Vector:', error);
         }

@@ -1,10 +1,11 @@
-import { Box, Container, SxProps, Theme, Typography } from "@mui/material";
+import { Box, Container, SxProps, Theme, Typography, useTheme } from "@mui/material";
 import ToggleButtons from "../components/ToggleButtons";
 import { useEffect, useState } from "react";
 import { exploitabilityButtonConfigs, impactButtonConfigs, scopeButtonConfigs } from "../config/ToggleButtonConfigs";
 import { CVSSValues, VectorValues } from "../types/types";
-import { calculateCVSS, generateCVSSVector, getNumericCVSSValue } from "../utils/cvssCalculator";
+import { calculateCVSS, generateCVSSVector, getNumericCVSSValue, parseCVSSVector } from "../utils/cvssCalculator";
 import CVSSDisplay from "../components/CVSSDisplay";
+import { Link, useSearchParams } from "react-router-dom";
 
 // const initialValues: CVSSValues = {
 //     AV: null,  // Attack Vector
@@ -43,6 +44,11 @@ const QuickCVSSCalculator = () => {
 
     // const [values, setValues] = useState<CVSSValues>(initialValues);
 
+    const [searchParams] = useSearchParams();
+    const cvssVector = searchParams.get('cvss_vector');
+
+    const theme = useTheme();
+
     const [vectorValues, setVectorValues] = useState<VectorValues>(initialVectorValues);
 
     const [baseScore, setBaseScore] = useState<null | number>(null)
@@ -61,6 +67,15 @@ const QuickCVSSCalculator = () => {
         }));
 
     };
+
+    useEffect(() => {
+        if (cvssVector) {
+            setVector(`CVSS:3.1/${cvssVector}`);
+            const values = parseCVSSVector(`CVSS:3.1/${cvssVector}`);
+            setVectorValues(values);
+        }
+
+    }, [cvssVector])
 
     useEffect(() => {
         // Comprobar si alguno de los valores es aún null
@@ -88,11 +103,13 @@ const QuickCVSSCalculator = () => {
             overflow: 'auto',
         }}>
         <CVSSDisplay baseScore={baseScore} vectorComponent={
-            <Typography variant="h6" sx={{
-                m: 1,
-                fontSize: "100%"
-            }}>
-                {vector}
+            <Typography variant="h6" sx={{ m: 1, fontSize: "100%" }}>
+                <Link
+                    to={`/full?cvss_vector=${cvssVector}`}
+                    style={{ textDecoration: 'none', color: theme.palette.primary.main }}
+                >
+                    {vector}
+                </Link>
             </Typography>
         } />
 

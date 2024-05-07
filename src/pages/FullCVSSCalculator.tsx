@@ -1,11 +1,12 @@
-import { Box, Container, SxProps, Theme, Typography } from "@mui/material";
+import { Box, Container, SxProps, Theme, Typography, useTheme } from "@mui/material";
 import ToggleButtons from "../components/ToggleButtons";
 import { useEffect, useState } from "react";
 import { exploitabilityButtonConfigs, impactButtonConfigs, scopeButtonConfigs } from "../config/ToggleButtonConfigs";
 import { CVSSValues, VectorValues } from "../types/types";
-import { calculateCVSS, generateCVSSVector, getNumericCVSSValue } from "../utils/cvssCalculator";
+import { calculateCVSS, generateCVSSVector, getNumericCVSSValue, parseCVSSVector } from "../utils/cvssCalculator";
 import AccordionMetrics from "../components/AccordionMetrics";
 import CVSSDisplay from "../components/CVSSDisplay";
+import { Link, useSearchParams } from "react-router-dom";
 
 // const initialValues: CVSSValues = {
 //     AV: null,  // Attack Vector
@@ -44,6 +45,11 @@ const FullCVSSCalculator = () => {
 
     // const [values, setValues] = useState<CVSSValues>(initialValues);
 
+    const [searchParams] = useSearchParams();
+    const cvssVector = searchParams.get('cvss_vector');
+
+    const theme = useTheme();
+
     const [vectorValues, setVectorValues] = useState<VectorValues>(initialVectorValues);
 
     const [baseScore, setBaseScore] = useState<null | number>(null)
@@ -62,6 +68,16 @@ const FullCVSSCalculator = () => {
         }));
 
     };
+
+    useEffect(() => {
+        if (cvssVector) {
+            setVector(`CVSS:3.1/${cvssVector}`);
+            const values = parseCVSSVector(`CVSS:3.1/${cvssVector}`);
+            setVectorValues(values);
+        }
+
+    }, [cvssVector])
+
 
     useEffect(() => {
         // Comprobar si alguno de los valores es aún null
@@ -91,11 +107,13 @@ const FullCVSSCalculator = () => {
 
         }}>
         <CVSSDisplay baseScore={baseScore} vectorComponent={
-            <Typography variant="h6" sx={{
-                m: 1,
-                fontSize: "100%"
-            }}>
-                {vector}
+            <Typography variant="h6" sx={{ m: 1, fontSize: "100%" }}>
+                <Link
+                    to={`/full?cvss_vector=${cvssVector}`}
+                    style={{ textDecoration: 'none', color: theme.palette.primary.main }}
+                >
+                    {vector}
+                </Link>
             </Typography>
         } />
         <Box sx={{
@@ -112,7 +130,7 @@ const FullCVSSCalculator = () => {
                     The Exploitability metrics reflect the characteristics of the thing that is vulnerable, which we refer to formally as the vulnerable component. Therefore, each of the Exploitability metrics listed below should be scored relative to the vulnerable component, and reflect the properties of the vulnerability that lead to a successful attack.
                 </Typography>
                 {exploitabilityButtonConfigs.map((config, index) => (
-                    <AccordionMetrics key={index} config={config} handleChange={(_, key: string) => handleChange(config.key, key)} />
+                    <AccordionMetrics key={index} config={config} value={vectorValues[config.key as keyof VectorValues]} handleChange={(_, key: string) => handleChange(config.key, key)} />
                 ))}
             </Box>
             {/* Contenedor de la segunda columna */}
@@ -126,7 +144,7 @@ const FullCVSSCalculator = () => {
                 </Typography>
                 <Box sx={{ p: 2 }}>
                     <ToggleButtons options={scopeButtonConfigs.options}
-                        onChange={(key: string) => handleChange(scopeButtonConfigs.key, key)} />
+                        onChange={(key: string) => handleChange(scopeButtonConfigs.key, key)} value={vectorValues['S']} />
                 </Box>
             </Box>
             <Box sx={boxStyle}>
@@ -138,7 +156,7 @@ const FullCVSSCalculator = () => {
                     The Impact metrics capture the effects of a successfully exploited vulnerability on the component that suffers the worst outcome that is most directly and predictably associated with the attack.
                 </Typography>
                 {impactButtonConfigs.map((config, index) => (
-                    <AccordionMetrics key={index} config={config} handleChange={(_, key: string) => handleChange(config.key, key)} />
+                    <AccordionMetrics key={index} config={config} value={vectorValues[config.key as keyof VectorValues]} handleChange={(_, key: string) => handleChange(config.key, key)} />
                 ))}
             </Box>
         </Box>
