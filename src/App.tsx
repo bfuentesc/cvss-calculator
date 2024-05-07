@@ -1,14 +1,20 @@
 import NavBar from './components/NavBar';
-import { ThemeProvider } from '@mui/material';
-import { lightTheme } from './themes/materialTheme';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { darkTheme, lightTheme } from './themes/materialTheme';
 import AppRoutes from './routes/Routes';
 import { BrowserRouter } from 'react-router-dom';
+import { useState } from 'react';
 
-function App() {
+
+const App = () => {
+
+  const [darkMode, setDarkMode] = useState(false);
+
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <CssBaseline />
       <BrowserRouter>
-        <NavBar />
+        <NavBar handleDarkModeChange={() => setDarkMode(!darkMode)} darkMode={darkMode} />
         <AppRoutes />
       </BrowserRouter>
     </ThemeProvider>

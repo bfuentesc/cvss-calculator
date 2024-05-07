@@ -10,13 +10,22 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import { DarkMode, LightMode } from '@mui/icons-material';
+
 
 const pages = [
     { name: 'Quick CVSS Calculator', path: '/quick' },
     { name: 'Full CVSS Calculator', path: '/full' },
     { name: 'CVSS Vector Input', path: '/vector-input' }
 ];
-const NavBar = () => {
+
+export interface NavBarProps {
+    darkMode: boolean;
+    handleDarkModeChange: () => void;
+}
+
+
+const NavBar = ({ darkMode, handleDarkModeChange }: NavBarProps) => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -43,7 +52,7 @@ const NavBar = () => {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="#"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -91,13 +100,17 @@ const NavBar = () => {
                                     <Typography textAlign="center">{name}</Typography>
                                 </MenuItem>
                             ))}
+                            <MenuItem onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Modo</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
+
                     <Typography
                         variant="h5"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="#"
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -111,6 +124,7 @@ const NavBar = () => {
                     >
                         CVSS Calculator
                     </Typography>
+
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map(({ name, path }) => (
                             <Button
@@ -121,9 +135,11 @@ const NavBar = () => {
                                 {name}
                             </Button>
                         ))}
+
+                        <IconButton onClick={handleDarkModeChange} sx={{ my: 2, color: 'white', display: 'block', ml: 'auto' }}>
+                            {darkMode ? <DarkMode fontSize="small" /> : <LightMode fontSize="small" />}
+                        </IconButton>
                     </Box>
-
-
                 </Toolbar>
             </Container>
         </AppBar>

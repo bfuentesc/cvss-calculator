@@ -10,7 +10,22 @@ export const lightTheme: ThemeOptions = createTheme({
       main: "#e9c46a",
     },
     success: {
-      main: '#2a9d8f',
+      main: "#2a9d8f",
     },
+  },
+});
+
+export const darkTheme: ThemeOptions = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#2a9d8f",
+    },
+    secondary: {
+      main: "#e9c46a",
+    },
+    success: {
+      main: "#e9c46a",
+    }
   },
 });

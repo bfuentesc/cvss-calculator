@@ -105,7 +105,7 @@ const QuickCVSSCalculator = () => {
         <CVSSDisplay baseScore={baseScore} vectorComponent={
             <Typography variant="h6" sx={{ m: 1, fontSize: "100%" }}>
                 <Link
-                    to={`/full?cvss_vector=${cvssVector}`}
+                    to={`/quick?cvss_vector=${cvssVector}`}
                     style={{ textDecoration: 'none', color: theme.palette.primary.main }}
                 >
                     {vector}
@@ -129,7 +129,7 @@ const QuickCVSSCalculator = () => {
                         <Typography variant="h6">
                             {config.title}
                         </Typography>
-                        <ToggleButtons options={config.options} onChange={(key: string) => handleChange(config.key, key)} />
+                        <ToggleButtons options={config.options} value={vectorValues[config.key as keyof VectorValues]} onChange={(key: string) => handleChange(config.key, key)} />
                     </Box>
                 ))}
             </Box>
@@ -142,7 +142,9 @@ const QuickCVSSCalculator = () => {
                 </Typography>
                 <Box sx={{ p: 2 }}>
                     <ToggleButtons options={scopeButtonConfigs.options}
-                        onChange={(key: string) => handleChange(scopeButtonConfigs.key, key)} />
+                        onChange={(key: string) => handleChange(scopeButtonConfigs.key, key)}
+                        value={vectorValues['S']}
+                    />
                 </Box>
             </Box>
             <Box sx={boxStyle}>
@@ -154,7 +156,7 @@ const QuickCVSSCalculator = () => {
                         <Typography variant="h6">
                             {config.title}
                         </Typography>
-                        <ToggleButtons options={config.options} onChange={(key: string) => handleChange(config.key, key)} />
+                        <ToggleButtons options={config.options} value={vectorValues[config.key as keyof VectorValues]} onChange={(key: string) => handleChange(config.key, key)} />
                     </Box>
                 ))}
             </Box>
