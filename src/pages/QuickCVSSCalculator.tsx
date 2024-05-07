@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, SxProps, Theme, Typography } from "@mui/material";
 import ToggleButtons from "../components/ToggleButtons";
 import { useEffect, useState } from "react";
 import { exploitabilityButtonConfigs, impactButtonConfigs, scopeButtonConfigs } from "../config/ToggleButtonConfigs";
@@ -27,6 +27,15 @@ const initialVectorValues: VectorValues = {
     I: null,   // Integrity
     A: null    // Availability
 };
+
+const boxStyle: SxProps<Theme> = {
+    display: 'flex',
+    flexDirection: 'column',
+    flexBasis: "100vh",
+    flex: 1,
+    p: 2,
+
+}
 
 
 
@@ -62,7 +71,6 @@ const QuickCVSSCalculator = () => {
             // console.log("Todos los valores han sido establecidos:", values);
             const numericCVSSValue: CVSSValues = getNumericCVSSValue(vectorValues) as unknown as CVSSValues
 
-            console.log(numericCVSSValue);
             setVector(generateCVSSVector(vectorValues));
             // setValues(numericCVSSValue);
             setBaseScore(calculateCVSS(numericCVSSValue));
@@ -71,31 +79,31 @@ const QuickCVSSCalculator = () => {
     }, [vectorValues]); // Depende del estado 'values' para re-ejecutarse cuando cambie
 
 
-    return <Container sx={{
-        padding: '20px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        overflow: 'auto',
-    }}>
+    return <Container
+        maxWidth="lg" sx={{
+            padding: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            overflow: 'auto',
+        }}>
         <CVSSDisplay baseScore={baseScore} vectorComponent={
-            <Typography variant="h6" style={{ textAlign: 'center' }}>
+            <Typography variant="h6" sx={{
+                m: 1,
+                fontSize: "100%"
+            }}>
                 {vector}
             </Typography>
         } />
+
         <Box sx={{
             display: 'flex',
             flexWrap: 'wrap',
             width: '100%',
         }}>
             {/* Contenedor de la primera columna */}
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexBasis: '100%',
-                flex: 1,
-                p: 2,
-            }}>
+            <Box sx={boxStyle}>
+
                 <Typography variant="h5">
                     Exploitability Metrics
                 </Typography>
@@ -109,13 +117,8 @@ const QuickCVSSCalculator = () => {
                 ))}
             </Box>
             {/* Contenedor de la segunda columna */}
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexBasis: '100%',
-                flex: 1,
-                p: 2,
-            }}>
+            <Box sx={boxStyle}>
+
                 {/* Contenido de la segunda columna */}
                 <Typography variant="h5">
                     Scope (S)
@@ -125,14 +128,7 @@ const QuickCVSSCalculator = () => {
                         onChange={(key: string) => handleChange(scopeButtonConfigs.key, key)} />
                 </Box>
             </Box>
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexBasis: '100%',
-                flex: 1,
-                p: 2,
-            }}>
-
+            <Box sx={boxStyle}>
                 <Typography variant="h5">
                     Impact Metrics
                 </Typography>

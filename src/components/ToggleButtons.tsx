@@ -4,6 +4,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Tooltip, Typography } from '@mui/material';
 import { ToggleButtonsProps } from '../types/types';
 
+
 export default function ToggleButtons({ value = null, options, onChange }: ToggleButtonsProps) {
   const [selectedValue, setSelectedValue] = React.useState<string | null>(value);
 
@@ -25,6 +26,7 @@ export default function ToggleButtons({ value = null, options, onChange }: Toggl
   return (
     <ToggleButtonGroup
       color="success"
+      size="small"
       value={selectedValue}
       exclusive
       onChange={handleSelection}

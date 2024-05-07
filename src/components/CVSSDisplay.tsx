@@ -1,4 +1,4 @@
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid, Typography, Container } from '@mui/material';
 import React from 'react';
 import GaugeComponent from 'react-gauge-component';
 import { determineSeverity } from '../utils/severityUtils';
@@ -13,11 +13,11 @@ interface CVSSDisplayProps {
 
 const CVSSDisplay = ({ baseScore, vectorComponent }: CVSSDisplayProps) => {
   const severity = determineSeverity(baseScore ?? 0);
-  console.log(`The severity is ${severity.label} with color ${severity.color}.`);
+  
   return (
-    <Box sx={{ width: "80%", margin: "0 auto" }}>
+    <Container maxWidth="lg">
       <Grid container direction="column" justifyContent="center" alignItems="center" spacing={1}>
-        <Grid item xs={12} sx={{ height: '75%' }}>
+        <Grid item xs={12}>
           <GaugeComponent
             style={{ width: "100%", height: "100%" }}
             type="semicircle"
@@ -50,12 +50,12 @@ const CVSSDisplay = ({ baseScore, vectorComponent }: CVSSDisplayProps) => {
             )
           }
         </Grid>
-        <Grid item xs={12} sx={{ height: '25%' }}>
+        <Grid item xs={12}>
           {vectorComponent}
 
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 };
 

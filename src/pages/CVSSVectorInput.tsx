@@ -1,4 +1,4 @@
-import { Box, Container, TextField, Typography } from "@mui/material";
+import { Box, Container, SxProps, TextField, Theme, Typography } from "@mui/material";
 import ToggleButtons from "../components/ToggleButtons";
 import { useEffect, useState } from "react";
 import { exploitabilityButtonConfigs, impactButtonConfigs, scopeButtonConfigs } from "../config/ToggleButtonConfigs";
@@ -28,6 +28,14 @@ const initialVectorValues: VectorValues = {
     A: null    // Availability
 };
 
+const boxStyle: SxProps<Theme> = {
+    display: 'flex',
+    flexDirection: 'column',
+    flexBasis: "20vh",
+    flex: 1,
+    p: 2,
+
+}
 
 
 const CVSSVectorInput = () => {
@@ -53,10 +61,8 @@ const CVSSVectorInput = () => {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target.value;
         setVector(input);
-        console.log(vector);
         try {
             const values = parseCVSSVector(input);
-            setVectorValues(values);
             console.log('Parsed CVSS Values:', values);
         } catch (error) {
             console.error('Error parsing CVSS Vector:', error);
@@ -80,18 +86,19 @@ const CVSSVectorInput = () => {
     }, [vectorValues]); // Depende del estado 'values' para re-ejecutarse cuando cambie
 
 
-    return <Container sx={{
-        padding: '20px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        overflow: 'auto',
-    }}>
+    return <Container
+        maxWidth="lg"
+        sx={{
+            padding: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            overflow: 'auto',
+        }}>
         <CVSSDisplay baseScore={baseScore} vectorComponent={
             <TextField
-                id="outlined-start-adornment"
                 fullWidth
-                sx={{ m: 1, width: "60vh" }}
+                color="success"
                 label="Enter CVSS Vector"
                 onChange={handleInputChange}
                 value={vector}
@@ -100,16 +107,11 @@ const CVSSVectorInput = () => {
         <Box sx={{
             display: 'flex',
             flexWrap: 'wrap',
+            // justifyContent: 'center', // Asegura que los componentes están centrados
             width: '100%',
         }}>
             {/* Contenedor de la primera columna */}
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexBasis: '100%',
-                flex: 1,
-                p: 2,
-            }}>
+            <Box sx={boxStyle}>
                 <Typography variant="h5">
                     Exploitability Metrics
                 </Typography>
@@ -123,13 +125,7 @@ const CVSSVectorInput = () => {
                 ))}
             </Box>
             {/* Contenedor de la segunda columna */}
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexBasis: '100%',
-                flex: 1,
-                p: 2,
-            }}>
+            <Box sx={boxStyle}>
                 {/* Contenido de la segunda columna */}
                 <Typography variant="h5">
                     Scope (S)
@@ -139,13 +135,7 @@ const CVSSVectorInput = () => {
                         onChange={(key: string) => handleChange(scopeButtonConfigs.key, key)} value={vectorValues['S']} />
                 </Box>
             </Box>
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexBasis: '100%',
-                flex: 1,
-                p: 2,
-            }}>
+            <Box sx={boxStyle}>
                 <Typography variant="h5">
                     Impact Metrics
                 </Typography>
