@@ -41,7 +41,7 @@ export function calculateCVSS(values: CVSSValues) {
     }
   }
 
-  return BaseScore;
+  return { BaseScore, Impact, Exploitability };
 }
 
 type CVSSMetricKey = "AV" | "AC" | "PR" | "UI" | "S" | "C" | "I" | "A";
@@ -96,8 +96,8 @@ export function getNumericCVSSValue(initialVectorValues: VectorValues): {
         if (key === "N") {
           result[metric] = cvssNumericValues.PR.N;
         } else if (key === "L" || key === "H") {
-          const prValue = cvssNumericValues.PR[key as 'L' | 'H'];
-          result[metric] = prValue[scope as 'U' | 'C'];
+          const prValue = cvssNumericValues.PR[key as "L" | "H"];
+          result[metric] = prValue[scope as "U" | "C"];
         } else {
           result[metric] = null; // En caso de que key no sea 'N', 'L', ni 'H'
         }
@@ -106,7 +106,9 @@ export function getNumericCVSSValue(initialVectorValues: VectorValues): {
       }
     } else {
       // Acceder a los valores para AV, AC, UI, C, I, A
-      result[metric] = (cvssNumericValues as any)[metric][key as string] as number;
+      result[metric] = (cvssNumericValues as any)[metric][
+        key as string
+      ] as number;
     }
   }
 
@@ -123,16 +125,16 @@ export function parseCVSSVector(vector: string): VectorValues {
     S: null,
     C: null,
     I: null,
-    A: null
+    A: null,
   };
 
   // Extraer la parte del vector después de "CVSS:3.1/"
   const regex = /CVSS:3\.1\/(.*)/;
   const matches = regex.exec(vector);
   if (matches && matches[1]) {
-    const components = matches[1].split('/');
-    components.forEach(component => {
-      const [key, value] = component.split(':');
+    const components = matches[1].split("/");
+    components.forEach((component) => {
+      const [key, value] = component.split(":");
       if (key && value && key in values) {
         values[key as CVSSMetricKey] = value;
       }
@@ -140,8 +142,8 @@ export function parseCVSSVector(vector: string): VectorValues {
   }
 
   // Asegurarse de que todos los campos están definidos, de lo contrario, establecerlos a null
-  const keys: CVSSMetricKey[] = ['AV', 'AC', 'PR', 'UI', 'S', 'C', 'I', 'A'];
-  keys.forEach(key => {
+  const keys: CVSSMetricKey[] = ["AV", "AC", "PR", "UI", "S", "C", "I", "A"];
+  keys.forEach((key) => {
     if (!values[key]) {
       values[key] = null;
     }
@@ -149,4 +151,3 @@ export function parseCVSSVector(vector: string): VectorValues {
 
   return values as VectorValues;
 }
-

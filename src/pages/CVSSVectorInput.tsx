@@ -44,7 +44,9 @@ const CVSSVectorInput = () => {
 
     const [vectorValues, setVectorValues] = useState<VectorValues>(initialVectorValues);
 
-    const [baseScore, setBaseScore] = useState<null | number>(null)
+    const [baseScore, setBaseScore] = useState<null | number>(null);
+    const [impact, setImpact] = useState<null | number>(null);
+    const [explotability, setExplotability] = useState<null | number>(null);
 
     const [vector, setVector] = useState<null | string>('')
 
@@ -80,7 +82,10 @@ const CVSSVectorInput = () => {
 
             setVector(generateCVSSVector(vectorValues));
             // setValues(numericCVSSValue);
-            setBaseScore(calculateCVSS(numericCVSSValue));
+            const { BaseScore, Impact, Exploitability } = calculateCVSS(numericCVSSValue);
+            setBaseScore(BaseScore);
+            setImpact(Impact);
+            setExplotability(Exploitability);
 
         }
     }, [vectorValues]); // Depende del estado 'values' para re-ejecutarse cuando cambie
@@ -95,15 +100,12 @@ const CVSSVectorInput = () => {
             alignItems: 'center',
             overflow: 'auto',
         }}>
-        <CVSSDisplay baseScore={baseScore} vectorComponent={
-            <TextField
-                fullWidth
-                color="success"
-                label="Enter CVSS Vector"
-                onChange={handleInputChange}
-                value={vector}
-            />
-        } />
+        <CVSSDisplay baseScore={baseScore} explotability={explotability} impact={impact} vectorComponent={<TextField
+            fullWidth
+            color="success"
+            label="Enter CVSS Vector"
+            onChange={handleInputChange}
+            value={vector} />} />
         <Box sx={{
             display: 'flex',
             flexWrap: 'wrap',

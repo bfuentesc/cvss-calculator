@@ -107,7 +107,7 @@ const QuickCVSSCalculator = () => {
             alignItems: 'center',
             overflow: 'auto',
         }}>
-        <CVSSDisplay baseScore={baseScore} vectorComponent={
+        <CVSSDisplay baseScore={baseScore} explotability={explotability} impact={impact} vectorComponent={
             <Typography
                 variant="h6"
                 sx={{
