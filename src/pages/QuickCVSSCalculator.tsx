@@ -118,7 +118,7 @@ const QuickCVSSCalculator = () => {
                     wordBreak: 'break-word' // Asegura que la ruptura de palabras se haga correctamente en todos los navegadores
                 }}
             >
-                <Link
+                {vector ? <Link
                     to={`/quick?cvss_vector=${vector}`}
                     style={{
                         textDecoration: 'none',
@@ -127,8 +127,8 @@ const QuickCVSSCalculator = () => {
                         overflowWrap: 'break-word', // Aplica también el ajuste en el nivel del enlace si es necesario
                     }}
                 >
-                    {vector}
-                </Link>
+                    {`CVSS:3.1/${vector}`}
+                </Link> : 'CVSS:3.1/AV:X/AC:X/PR:X/UI:X/S:X/C:X/I:X/A:X'}
             </Typography>
         } />
 

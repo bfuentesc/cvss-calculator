@@ -1,4 +1,4 @@
-import { Box, Container, SxProps, TextField, Theme, Typography } from "@mui/material";
+import { Box, Container, InputAdornment, SxProps, TextField, Theme, Typography } from "@mui/material";
 import ToggleButtons from "../components/ToggleButtons";
 import { useEffect, useState } from "react";
 import { exploitabilityButtonConfigs, impactButtonConfigs, scopeButtonConfigs } from "../config/ToggleButtonConfigs";
@@ -100,12 +100,18 @@ const CVSSVectorInput = () => {
             alignItems: 'center',
             overflow: 'auto',
         }}>
-        <CVSSDisplay baseScore={baseScore} explotability={explotability} impact={impact} vectorComponent={<TextField
-            fullWidth
-            color="success"
-            label="Enter CVSS Vector"
-            onChange={handleInputChange}
-            value={vector} />} />
+        <CVSSDisplay baseScore={baseScore} explotability={explotability} impact={impact} vectorComponent={
+            <TextField
+                fullWidth
+                color="success"
+                sx={{width:{xs:"70vw",md:"25vw"}}}
+                label="Enter CVSS Vector"
+                onChange={handleInputChange}
+                value={vector}
+                InputProps={{
+                    startAdornment: <InputAdornment position="start">CVSS:3.1</InputAdornment>,
+                  }}
+                />} />
         <Box sx={{
             display: 'flex',
             flexWrap: 'wrap',

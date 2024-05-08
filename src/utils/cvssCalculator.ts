@@ -72,7 +72,8 @@ export function generateCVSSVector(values: VectorValues): string {
     return `${metricMapping[safeKey]}:${value}`;
   });
 
-  return `CVSS:3.1/${parts.join("/")}`;
+  // return `CVSS:3.1/${parts.join("/")}`;
+  return `${parts.join("/")}`;
 }
 
 export function getNumericCVSSValue(initialVectorValues: VectorValues): {
@@ -129,10 +130,11 @@ export function parseCVSSVector(vector: string): VectorValues {
   };
 
   // Extraer la parte del vector después de "CVSS:3.1/"
-  const regex = /CVSS:3\.1\/(.*)/;
+  const regex = /AV:[A-Z]\/AC:[A-Z]\/PR:[A-Z]\/UI:[A-Z]\/S:[A-Z]\/C:[A-Z]\/I:[A-Z]\/A:[A-Z]/;
   const matches = regex.exec(vector);
-  if (matches && matches[1]) {
-    const components = matches[1].split("/");
+  console.log(matches);
+  if (matches && matches[0]) {
+    const components = matches[0].split("/");
     components.forEach((component) => {
       const [key, value] = component.split(":");
       if (key && value && key in values) {

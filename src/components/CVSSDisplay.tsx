@@ -27,9 +27,9 @@ const CVSSDisplay = ({ baseScore, explotability, impact, vectorComponent }: CVSS
   return (
     <Container maxWidth="lg" key={themeKey}>
       <Grid container direction="column" justifyContent="center" alignItems="center" spacing={2}>
-        <Grid container item xs={12} direction="row" justifyContent="center" alignItems="center" spacing={1}>
+        <Grid container item xs={12} direction="row" justifyContent="center" alignItems="center" spacing={5}>
           <Grid item xs={12} sm={6} md={4}>
-            <Typography variant="h5" style={{ textAlign: 'center', width: "100%", fontWeight: "bold" }}>Severity</Typography>
+            <Typography variant="h5" style={{ textAlign: 'center', width: "100%", fontWeight: "bold" }}>Base Score (Severity)</Typography>
             <GaugeComponent
               style={{ width: "80%", margin: "auto" }}
               type="semicircle"
@@ -54,13 +54,9 @@ const CVSSDisplay = ({ baseScore, explotability, impact, vectorComponent }: CVSS
               minValue={0}
               maxValue={10}
             />
-            {
-              baseScore !== null && (
-                <Typography variant="body1" style={{ textAlign: 'center', width: "100%", fontWeight: "bold", color: `${severity.color}` }}>
-                  {severity.label}
-                </Typography>
-              )
-            }
+            <Typography variant="body1" style={{ textAlign: 'center', width: "100%", fontWeight: "bold", color: baseScore ? severity.color : theme.palette.text.primary }}>
+              {baseScore ? severity.label : 'None'}
+            </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Typography variant="h5" style={{ textAlign: 'center', width: "100%", fontWeight: "bold" }}>Explotability</Typography>
@@ -88,13 +84,9 @@ const CVSSDisplay = ({ baseScore, explotability, impact, vectorComponent }: CVSS
               minValue={0}
               maxValue={3.9}
             />
-            {
-              explotability !== null && (
-                <Typography variant="body1" style={{ textAlign: 'center', width: "100%", fontWeight: "bold", color: `${_explotability.color}` }}>
-                  {_explotability.label}
-                </Typography>
-              )
-            }
+            <Typography variant="body1" style={{ textAlign: 'center', width: "100%", fontWeight: "bold", color: baseScore ? _explotability.color : theme.palette.text.primary }}>
+              {explotability ? _explotability.label : 'None'}
+            </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Typography variant="h5" style={{ textAlign: 'center', width: "100%", fontWeight: "bold" }}>Impact</Typography>
@@ -122,13 +114,9 @@ const CVSSDisplay = ({ baseScore, explotability, impact, vectorComponent }: CVSS
               minValue={0}
               maxValue={6.1}
             />
-            {
-              impact !== null && (
-                <Typography variant="body1" style={{ textAlign: 'center', width: "100%", fontWeight: "bold", color: `${_impact.color}` }}>
-                  {_impact.label}
-                </Typography>
-              )
-            }
+            <Typography variant="body1" style={{ textAlign: 'center', width: "100%", fontWeight: "bold", color: baseScore ? _impact.color : theme.palette.text.primary }}>
+              {impact ? _impact.label : 'None'}
+            </Typography>
           </Grid>
         </Grid>
         <Grid item xs={12}>
