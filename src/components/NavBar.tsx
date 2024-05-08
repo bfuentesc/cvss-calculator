@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 import { DarkMode, LightMode } from '@mui/icons-material';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 
 
 const pages = [
@@ -21,7 +22,7 @@ const pages = [
 
 export interface NavBarProps {
     darkMode: boolean;
-    handleDarkModeChange: () => void;
+    handleDarkModeChange: (value: boolean) => void;
 }
 
 
@@ -100,9 +101,26 @@ const NavBar = ({ darkMode, handleDarkModeChange }: NavBarProps) => {
                                     <Typography textAlign="center">{name}</Typography>
                                 </MenuItem>
                             ))}
-                            <MenuItem onClick={handleCloseNavMenu}>
-                                <Typography textAlign="center">Modo</Typography>
-                            </MenuItem>
+                            <Box sx={{
+                                display: "flex",
+                                justifyContent: "center", py: "6px"
+                            }}>
+                                <ToggleButtonGroup
+                                    color="primary"
+                                    size="small"
+                                    value={darkMode}
+                                    exclusive
+                                    onChange={(event, value) => handleDarkModeChange(value)}
+                                    aria-label="text selection"
+                                >
+                                    <ToggleButton value={true} >
+                                        <DarkMode fontSize="small" />
+                                    </ToggleButton>
+                                    <ToggleButton value={false} >
+                                        <LightMode fontSize="small" />
+                                    </ToggleButton>
+                                </ToggleButtonGroup>
+                            </Box>
                         </Menu>
                     </Box>
 
@@ -136,7 +154,7 @@ const NavBar = ({ darkMode, handleDarkModeChange }: NavBarProps) => {
                             </Button>
                         ))}
 
-                        <IconButton onClick={handleDarkModeChange} sx={{ my: 2, color: 'white', display: 'block', ml: 'auto' }}>
+                        <IconButton onClick={() => handleDarkModeChange(!darkMode)} sx={{ my: 2, color: 'white', display: 'block', ml: 'auto' }}>
                             {darkMode ? <DarkMode fontSize="small" /> : <LightMode fontSize="small" />}
                         </IconButton>
                     </Box>
