@@ -109,7 +109,7 @@ const FullCVSSCalculator = () => {
         <CVSSDisplay baseScore={baseScore} vectorComponent={
             <Typography variant="h6" sx={{ m: 1, fontSize: "100%" }}>
                 <Link
-                    to={`/full?cvss_vector=${cvssVector}`}
+                    to={`/full?cvss_vector=${vector}`}
                     style={{ textDecoration: 'none', color: theme.palette.primary.main }}
                 >
                     {vector}

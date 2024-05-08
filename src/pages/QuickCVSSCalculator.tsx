@@ -105,7 +105,7 @@ const QuickCVSSCalculator = () => {
         <CVSSDisplay baseScore={baseScore} vectorComponent={
             <Typography variant="h6" sx={{ m: 1, fontSize: "100%" }}>
                 <Link
-                    to={`/quick?cvss_vector=${cvssVector}`}
+                    to={`/quick?cvss_vector=${vector}`}
                     style={{ textDecoration: 'none', color: theme.palette.primary.main }}
                 >
                     {vector}
