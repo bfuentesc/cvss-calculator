@@ -4,6 +4,7 @@ import { darkTheme, lightTheme } from './themes/materialTheme';
 import AppRoutes from './routes/Routes';
 import { BrowserRouter } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Footer from './components/Footer';
 
 const App = () => {
   // Inicializar el estado de darkMode leyendo de localStorage o usando false como default
@@ -21,9 +22,10 @@ const App = () => {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <BrowserRouter>
-        <NavBar handleDarkModeChange={() => setDarkMode(!darkMode)} darkMode={darkMode} />
+        <NavBar handleDarkModeChange={(value: boolean) => setDarkMode(value)} darkMode={darkMode} />
         <AppRoutes />
       </BrowserRouter>
+      <Footer/>
     </ThemeProvider>
   );
 }
